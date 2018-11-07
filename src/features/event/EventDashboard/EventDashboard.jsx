@@ -3,7 +3,7 @@ import { Grid, Button } from "semantic-ui-react";
 import EventList from "../EventList/EventList";
 import EventForm from "../EvetForm/EventForm";
 
-const events = [
+const eventsDashboard = [
   {
     id: '1',
     title: 'Trip to Tower of London',
@@ -59,7 +59,7 @@ class EventDashboard extends Component {
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventList />
+          <EventList events={eventsDashboard}/>
         </Grid.Column>
         <Grid.Column width={6}>
           <Button positive content="Craete Event" />
