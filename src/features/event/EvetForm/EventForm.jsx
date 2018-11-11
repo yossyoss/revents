@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 
-const selectedEvent = {
+const emptyEvent = {
   title: "",
   date: "",
   city: "",
@@ -10,8 +10,9 @@ const selectedEvent = {
   }
 class EventForm extends Component {
   state = {
-    event: selectedEvent
+    event: emptyEvent
   }
+
   componentDidMount() {
     if(this.props.selectedEvent != null) {
       this.setState({
@@ -19,10 +20,24 @@ class EventForm extends Component {
       })
     }
   }
+componentWillReceiveProps(nextProps) {
+  console.log('componentWillReceiveProps');
+  
+if(this.props.selectedEvent != nextProps.selectedEvent) {
+  this.setState({
+    event: nextProps.selectedEvent || emptyEvent
+  })
+}
+}
+
   onFormSubmit = evt => {
     evt.preventDefault();
     console.log(this.state.event);
-    this.props.createEvent(this.state.event)
+    if(this.state.event.id) {
+      this.props.updateEvent(this.state.event);
+    }else{
+      this.props.createEvent(this.state.event)
+    }   
   };
 
   onInputChange = evt => {
@@ -33,6 +48,7 @@ class EventForm extends Component {
       event: newEvent
     });
   };
+
   render() {
     const { handleCancel } = this.props;
     const { event } = this.state;
